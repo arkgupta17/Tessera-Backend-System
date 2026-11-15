@@ -1,4 +1,4 @@
-
+```latex
 \documentclass[a4paper,10pt]{article}
 
 \usepackage[T1]{fontenc}
@@ -137,3 +137,4 @@ Senior Secondary (Class XII -- ICSE)
 \textbf{AI \& Data Science:} Artificial Intelligence, Machine Learning, Deep Learning, Data Visualization, Big Data Analytics
 
 \end{document}
+```
