@@ -1,140 +1,173 @@
-```latex
-\documentclass[a4paper,10pt]{article}
+# Tessera — Event-Driven Backend System
 
-\usepackage[T1]{fontenc}
-\usepackage{latexsym}
-\usepackage{microtype}
-\usepackage[margin=0.55in]{geometry}
-\usepackage{enumitem}
-\usepackage[colorlinks=true,urlcolor=black]{hyperref}
-\usepackage{titlesec}
-\usepackage{amssymb}
+A fault-tolerant, asynchronous event-processing backend built with **Node.js, TypeScript, PostgreSQL, Redis, BullMQ, and Docker**.
 
-% ---------- Global Formatting ----------
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0pt}
-\linespread{1.0}
-\urlstyle{same}
+Tessera demonstrates reliable event ingestion, transactional event publishing, background job processing, retry mechanisms, and recovery from interrupted processing.
 
-\titleformat{\section}
-  {\normalsize\bfseries}
-  {}{0em}{}[\titlerule]
+## Overview
 
-\titlespacing*{\section}{0pt}{6pt}{3pt}
+In distributed backend systems, processing an event reliably is challenging. Events can be duplicated, workers can fail, and messages can remain unprocessed when services restart.
 
-\setlist[itemize]{
-    leftmargin=12pt,
-    itemsep=1pt,
-    topsep=2pt,
-    parsep=0pt,
-    partopsep=0pt
-}
+Tessera addresses these challenges through an event-driven architecture that combines PostgreSQL transactions, the Transactional Outbox Pattern, Redis-backed job queues, and independent background workers.
 
-\begin{document}
+The system accepts events through a REST API, persists them transactionally, publishes them to a job queue, and processes them asynchronously while tracking their lifecycle.
 
-% =======================
-% HEADER
-% =======================
-\begin{center}
-    {\fontsize{28}{31}\selectfont\scshape Ark Gupta}\\[3pt]
-    \small
-    (+91) 6393807748 \quad\textbar\quad
-    \href{mailto:arkgupta17@gmail.com}{arkgupta17@gmail.com}
-    \quad\textbar\quad
-    \href{https://www.linkedin.com/in/ark-gupta-iiitn27}{LinkedIn}
-    \quad\textbar\quad
-    \href{https://github.com/arkgupta17}{GitHub}
-    \quad\textbar\quad
-    \href{https://leetcode.com/u/ark_gupta03/}{LeetCode}
-\end{center}
+## Architecture
 
-\vspace{-5pt}
-
-% =======================
-\section*{Technical Skills}
-
-\textbf{Languages:} C++, Python, JavaScript, TypeScript, SQL\\
-\textbf{Backend \& Frameworks:} Node.js, Express.js, FastAPI, React.js, Next.js, REST APIs\\
-\textbf{Databases \& Infrastructure:} PostgreSQL, MySQL, MongoDB, Redis, Docker, BullMQ\\
-\textbf{AI \& Machine Learning:} Scikit-learn, FAISS, Sentence Transformers, TensorFlow, PyTorch\\
-\textbf{Tools:} Git, GitHub, Playwright, Linux, Postman
-
-% =======================
-\section*{Projects}
-
-\textbf{\href{https://github.com/arkgupta17/zenness-fullstack-mental-health-app}{Zenness: AI-Powered Mental Health Assessment Platform}}
-\href{https://zenness.vercel.app}{[Live]}
-\hfill {\small\textit{Next.js, FastAPI, SQLAlchemy, JWT, Scikit-learn}}
-
-\begin{itemize}
-    \item Built a full-stack stress assessment platform using \textbf{Next.js, FastAPI}, and a \textbf{22-feature SVM pipeline}, with JWT authentication and personalized wellness recommendations.
-    \item Optimized an \textbf{SVM classifier} on $\sim$1,100 samples, achieving \textbf{91.89\% accuracy} against a \textbf{34.24\% baseline} through behavioral and health-risk feature engineering.
-    \item Developed \textbf{REST APIs} and assessment-history dashboards using \textbf{SQLAlchemy and SQLite}; deployed on \textbf{Vercel and Render} with $\sim$262 ms average inference latency.
-\end{itemize}
-
-\vspace{2pt}
-
-\textbf{\href{https://github.com/arkgupta17/EduPilot-V2}{EduPilot: AI Knowledge Engine}}
-\hfill {\small\textit{Next.js, FastAPI, Python, Playwright, FAISS, Sentence Transformers, Groq API}}
-
-\begin{itemize}
-    \item Built a full-stack \textbf{RAG platform} for websites and documents, indexing \textbf{1,443 chunks} from \textbf{148 pages} across \textbf{15+ institutions}.
-    \item Developed a \textbf{Playwright crawler} for JavaScript-rendered sites and a document-ingestion pipeline for PDF, DOCX, and HTML sources.
-    \item Engineered hybrid retrieval combining \textbf{semantic similarity, lexical matching, and section relevance}, with query rewriting and source filtering for cited, evidence-grounded answers.
-\end{itemize}
-
-\vspace{2pt}
-
-\textbf{Tessera: Event-Driven Backend System}
-\hfill {\small\textit{Node.js, TypeScript, PostgreSQL, Redis, BullMQ, Docker}}
-
-\begin{itemize}
-    \item Built an event-driven \textbf{REST API} with PostgreSQL transactions and idempotent ingestion, atomically persisting events and outbox records to prevent duplicate processing.
-    \item Implemented the \textbf{Transactional Outbox Pattern} with \textbf{Redis and BullMQ}, enabling asynchronous processing, exponential-backoff retries, lifecycle tracking, and stale-event recovery.
-    \item Containerized \textbf{6 services with Docker Compose}, configuring persistent PostgreSQL storage, Redis health checks, and independent workers; verified event processing and recovery across container recreation.
-\end{itemize}
-
-% =======================
-\section*{Open Source Contributions}
-
-\textbf{JuliaLang Ecosystem (JuliaLang, DataFrames.jl)}
-\hfill \textit{Dec 2025 -- Present}
-
-\begin{itemize}[itemsep=0pt,topsep=1pt]
-    \item Refactored \textbf{JuliaLang/julia}'s README (\#60443; 48k\(\star\)), adding a dedicated \textbf{Contributing} section to streamline onboarding and contribution workflows -- \textbf{merged} into master.
-    \item Fixed invalid indexing in \textbf{DataFrames.jl} (\#3522) for \textbf{SubDataFrame} transformations with \texttt{copycols=false}, improving selection error handling based on maintainer feedback -- \textbf{merged} into master.
-\end{itemize}
-
-% =======================
-\section*{Education}
-
-\textbf{Indian Institute of Information Technology, Nagpur}
-\hfill Aug 2023 -- Present\\[-1pt]
-B.Tech in Computer Science \& Engineering (Data Science and Analytics)
-
-\vspace{3pt}
-
-\textbf{Immaculate Conception Convent School, Lucknow}
-\hfill 2020 -- 2022\\[-1pt]
-Senior Secondary (Class XII -- ICSE)
-\hfill \textbf{94\%}
-
-% =======================
-\section*{Achievements \& Certifications}
-
-\begin{itemize}[itemsep=0pt,topsep=1pt]
-    \item \textbf{2nd Runner-Up} -- Masters' Union Hackathon, XPECTO'26 (IIT Mandi)
-    \item \textbf{Competitive Programming:} 350+ LeetCode problems; peak rating \textbf{1598}.
-    \item \textbf{OCI AI Foundations Associate} -- Oracle \hfill \textit{Feb 2026}
-    \item \textbf{API Fundamentals Student Expert} -- Postman \hfill \textit{Mar 2026}
-    \item \textbf{Fundamentals of Deep Learning} -- NVIDIA \hfill \textit{Mar 2026}
-\end{itemize}
-
-% =======================
-\section*{Relevant Coursework}
-
-\textbf{Core CS:} DSA, OOP, Operating Systems, DBMS, Computer Networks, Foundations of Computing\\
-\textbf{AI \& Data Science:} Artificial Intelligence, Machine Learning, Deep Learning, Data Visualization, Big Data Analytics
-
-\end{document}
+```mermaid
+flowchart TD
+    A[Client] --> B[REST API]
+    B --> C[(PostgreSQL)]
+    C --> D[Outbox Publisher]
+    D --> E[(Redis / BullMQ)]
+    E --> F[Event Worker]
+    F --> C
+    G[Recovery Scanner] --> C
+    G --> E
 ```
+
+### Core Components
+
+| Component | Responsibility |
+|---|---|
+| REST API | Accepts and validates incoming events |
+| PostgreSQL | Stores events and transactional outbox records |
+| Outbox Publisher | Publishes pending outbox events to BullMQ |
+| Redis | Provides queue infrastructure |
+| Event Worker | Processes queued events asynchronously |
+| Recovery Scanner | Detects stale processing events and requeues them |
+
+The application runs as independent services using Docker Compose.
+
+## Event Processing Workflow
+
+1. **Event ingestion:** The client submits an event through the REST API.
+2. **Validation and persistence:** The API validates the event and uses a PostgreSQL transaction to persist the event and its corresponding outbox record atomically.
+3. **Outbox publishing:** The publisher identifies pending outbox records and submits corresponding jobs to BullMQ.
+4. **Asynchronous processing:** The worker consumes queued jobs and updates event lifecycle states.
+5. **Retry handling:** Failed jobs can be retried using exponential backoff.
+6. **Recovery:** The recovery scanner identifies stale events left in processing states and requeues them for processing.
+
+## Key Features
+
+- **Idempotent Event Ingestion:** Handles duplicate event submissions to avoid creating duplicate event records.
+- **Transactional Outbox Pattern:** Atomically persists business events and outbox records to prevent event loss between database writes and queue publishing.
+- **Asynchronous Processing:** Uses Redis and BullMQ to decouple event ingestion from background execution.
+- **Retry Mechanism:** Supports automatic retries with exponential backoff for failed jobs.
+- **Event Lifecycle Tracking:** Tracks event states such as `RECEIVED`, `PROCESSING`, `COMPLETED`, and `FAILED`.
+- **Stale Event Recovery:** Detects interrupted processing and requeues eligible events.
+- **Containerized Architecture:** Runs the API, workers, PostgreSQL, and Redis as independent Docker Compose services.
+
+## Technology Stack
+
+| Category | Technologies |
+|---|---|
+| Runtime | Node.js |
+| Language | TypeScript |
+| API | Express.js, REST |
+| Database | PostgreSQL |
+| Queue | BullMQ |
+| Cache / Queue Infrastructure | Redis |
+| Containerization | Docker, Docker Compose |
+
+## API Endpoints
+
+### Health Check
+
+`GET /health`
+
+Checks whether the API service is running.
+
+Example response:
+
+```json
+{
+  "status": "ok",
+  "service": "tessera"
+}
+```
+
+### Ingest Event
+
+`POST /events`
+
+Submits an event for asynchronous processing.
+
+Example request:
+
+```json
+{
+  "eventId": "evt_001",
+  "type": "OrderPlaced",
+  "payload": {
+    "orderId": "order_123",
+    "amount": 2000
+  }
+}
+```
+
+The API validates the request, persists the event and outbox record transactionally, and returns the ingestion result.
+
+## Running Locally with Docker
+
+### Prerequisites
+
+- Docker Desktop
+- Git
+
+### 1. Clone the repository
+
+```bash
+git clone <YOUR_REPOSITORY_URL>
+cd tessera
+```
+
+### 2. Configure environment variables
+
+Configure the environment variables required by the Docker Compose configuration and database connection.
+
+### 3. Start the services
+
+```bash
+docker compose up --build
+```
+
+### 4. Verify the API
+
+Open:
+
+```text
+http://localhost:3000/health
+```
+
+### 5. Submit a test event
+
+Use the `POST /events` endpoint with the example request above.
+
+### 6. Inspect service logs
+
+```bash
+docker compose logs -f
+```
+
+### 7. Stop the services
+
+```bash
+docker compose down
+```
+
+## Engineering Concepts Demonstrated
+
+- Event-driven architecture
+- Database transactions and atomic persistence
+- Transactional Outbox Pattern
+- Idempotency and duplicate handling
+- Asynchronous job processing
+- Message queue architecture
+- Retry strategies and exponential backoff
+- Failure detection and recovery
+- Docker containerization and service orchestration
+
+## Project Goal
+
+Tessera was built to explore the engineering challenges involved in reliable asynchronous backend systems, particularly how to coordinate database persistence, message publishing, background processing, and recovery across independent services.
